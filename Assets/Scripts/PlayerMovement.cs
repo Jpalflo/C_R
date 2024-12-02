@@ -163,7 +163,6 @@ public class PlayerMovement : MonoBehaviour
         //apply gravity constantly
         velocity.y += gravity * Time.deltaTime;
         characterController.Move(velocity * Time.deltaTime);
-        Debug.Log(targetSpeed);
     }
 
     /// <summary>

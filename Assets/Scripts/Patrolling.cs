@@ -7,13 +7,12 @@ public class NewBehaviourScript : MonoBehaviour
 {
     [Header("Patrol")]
     [SerializeField] private GameObject patrolPointsContainer;
-    private List<Transform> patrolPoints = new List<Transform>();
+    [SerializeField]private List<Transform> patrolPoints = new List<Transform>();
     private int destinationPoint = 0; //internal index to next destination
     private bool isChasing = false; //is Chasing Player
 
-    private NavMeshAgent agent;
+    [SerializeField]private NavMeshAgent agent;
 
-    private WeaponController weaponController;
     private Renderer enemyRenderer;
 
     //Player
@@ -58,18 +57,24 @@ public class NewBehaviourScript : MonoBehaviour
     /// </summary>
     private void GotoNextPatrolPoint()
     {
+        // pa qeu no toque el punto directamente
         if (agent.remainingDistance <= 0.5f)
         {
+            //agent.isStopped = true;
+
             //choose next destinationPoint in the List
             //cycling to the start if necessary
-            destinationPoint = (destinationPoint + 1) % patrolPoints.Count;
+            //destinationPoint = (destinationPoint + 1) % patrolPoints.Count;
         }
 
         //Restart the stopping distance to 0 to posibility the Patrol
         agent.stoppingDistance = 0f;
 
         //set the agent to the currently destination Point
-        agent.SetDestination(patrolPoints[destinationPoint].position);
+        
+            agent.SetDestination(patrolPoints[destinationPoint].position);
+            agent.isStopped = true;
+
 
 
 
@@ -89,9 +94,9 @@ public class NewBehaviourScript : MonoBehaviour
             if (hit.distance <= 10f)
             {
                 isChasing = true; //Chase Player
-                agent.SetDestination(playerTransform.position);
+                agent.SetDestination(patrolPoints[destinationPoint + 1].position);
                 agent.stoppingDistance = 3f;
-                transform.LookAt(playerTransform.position);
+                transform.LookAt(playerTransform.transform);
 
 
                 //Stop Enemy at 5m 
@@ -107,8 +112,8 @@ public class NewBehaviourScript : MonoBehaviour
                 //shoot Player if distance between them is lower than 7m
                 if (hit.distance <= 7f)
                 {
-                    if (weaponController.CanShoot())
-                        weaponController.Shoot();
+                    //if (weaponController.CanShoot())
+                    //    weaponController.Shoot();
                 }
             }
             //If the player more than 10f distance
