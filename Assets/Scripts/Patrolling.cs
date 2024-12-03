@@ -8,8 +8,15 @@ public class NewBehaviourScript : MonoBehaviour
     [Header("Patrol")]
     [SerializeField] private GameObject patrolPointsContainer;
     [SerializeField]private List<Transform> patrolPoints = new List<Transform>();
+
+    [SerializeField] private GameObject wanderPointsContainer;
+    [SerializeField]private List<BoxCollider> wanderPoints = new List<BoxCollider>();
+
+
+
     private int destinationPoint = 0; //internal index to next destination
-    private bool isChasing = false; //is Chasing Player
+    private int currentPoint = 0; //internal index to next destination
+    private bool isChased = false; //is Chasing Player
 
     [SerializeField]private NavMeshAgent agent;
 
@@ -18,9 +25,13 @@ public class NewBehaviourScript : MonoBehaviour
     //Player
     private Transform playerTransform;
 
+    [SerializeField]private float wanderTime;
+    [SerializeField] private float wanderTimeCounter = 4f;
+
 
     private void Start()
     {
+
         //get Components
         agent = GetComponent<NavMeshAgent>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
@@ -34,102 +45,139 @@ public class NewBehaviourScript : MonoBehaviour
         foreach (Transform child in patrolPointsContainer.transform)
             patrolPoints.Add(child);
 
+        foreach (Transform child in wanderPointsContainer.transform)
+        {
+            wanderPoints.Add(child.GetComponent<BoxCollider>());
+        }
+
         //Randomly choose first destination point
         destinationPoint = Random.Range(0, patrolPoints.Count);
+        currentPoint = destinationPoint;
+
 
         //First time go to Next Patrol
-        GotoNextPatrolPoint();
+        FirstPatrol();
+
     }
 
 
     private void Update()
     {
+        Debug.Log(isChased);
+
+        if (!agent.hasPath)
+        {
+            wanderTime -= Time.deltaTime;
+
+        }
+
         //search player with Ray Cast
         SearchPlayer();
-
-        //Choose next destination point when the agents get close to the current one
-        if (!isChasing && !agent.pathPending && agent.remainingDistance < 3f)
+        if (isChased == false)
         {
-            //GotoNextPatrolPoint();
 
+            if (wanderTime <= 0) /// ponerlo con un timer
+            {
+                StartCoroutine(Wander());
+            }
         }
+
+
     }
 
     /// <summary>
-    /// Enemy Go to next destinationPoint
+    /// first destination
     /// </summary>
-    private void GotoNextPatrolPoint()
+    private void FirstPatrol()
     {
-        // pa qeu no toque el punto directamente
-        if (agent.remainingDistance <= 0.5f)
-        {
-            //agent.isStopped = true;
-
-            //choose next destinationPoint in the List
-            //cycling to the start if necessary
-            //destinationPoint = (destinationPoint + 1) % patrolPoints.Count;
-        }
-
-        //Restart the stopping distance to 0 to posibility the Patrol
-        agent.stoppingDistance = 0f;
-
         //set the agent to the currently destination Point
-        agent.SetDestination(patrolPoints[destinationPoint].position);
         agent.isStopped = false;
+        agent.SetDestination(patrolPoints[destinationPoint].position);
 
 
 
+        //currentPoint = destinationPoint;
+        //Vector3 wanderMove = new Vector3(Random.Range(wanderPoints[currentPoint].bounds.min.x , wanderPoints[currentPoint].bounds.max.x), Random.Range(wanderPoints[currentPoint].bounds.min.y, wanderPoints[currentPoint].bounds.max.y), Random.Range(wanderPoints[currentPoint].bounds.min.z, wanderPoints[currentPoint].bounds.max.z));
+        //agent.SetDestination(wanderMove);
+        //Debug.Log(wanderMove);
+        //agent.isStopped = false;
 
+    }
 
+    /// <summary>
+    /// change destination randomly
+    /// </summary>
+    private void ChangeDestination()
+    {
+        if (!isChased) ///esto
+        {    isChased = true;/// y esto para que la condicion se cumpla una vez
+        
+            Debug.Log("visto");
+
+            destinationPoint = Random.Range(0, patrolPoints.Count);
+            if (destinationPoint == currentPoint)//se iguala por si sale el mismo numero y cambiarlo
+            {
+                destinationPoint = Random.Range(0, patrolPoints.Count);
+
+            }
+            currentPoint = destinationPoint;
+            agent.SetDestination(patrolPoints[destinationPoint].position);
+            agent.isStopped = false;
+        }
+        
     }
 
 
     /// <summary>
-    /// Enemy search and go towards player
+    /// Enemy search and go other direction to destination point
     /// </summary>
     private void SearchPlayer()
     {
         NavMeshHit hit;
         //if no obstacles between enemy and player
-        //if (!agent.Raycast(playerTransform.position, out hit))
-        //{
-        //    //Go towards Player only if is at 10m or lower
-        //    if (hit.distance <= 10f)
-        //    {
-        //        isChasing = true; //Chase Player
-        //        agent.SetDestination(patrolPoints[destinationPoint + 1].position);
-        //        agent.stoppingDistance = 3f;
-        //        transform.LookAt(patrolPoints[destinationPoint +1].transform);
-
-
-               
-              
-                
-        //    }
-        //    //If the player more than 10f distance
-        //    else
-        //    {
-        //        agent.isStopped = false;
-        //        isChasing = false;
-        //    }
-        //}
-        ////Player Not in the Ray Cast 
-        //else
-        //{
-        //    agent.isStopped = false;
-        //    isChasing = false;
-        //}
+        if (!agent.Raycast(playerTransform.position, out hit))
+        {
+            //Go towards Player only if is at 10m or lower
+            if (hit.distance <= 10f)
+            {
+                ChangeDestination();
+                transform.LookAt(agent.transform);
+                agent.speed = 8f;
+            }
+            ////If the player more than 10f distance
+            else
+            {
+                agent.isStopped = false;
+                isChased = false;
+            }
+        }
+        //Player Not in the Ray Cast
+        else
+        {
+            agent.isStopped = false;
+            isChased = false;
+        }
 
     }
 
-    /// <summary>
-    /// Handle when the enemy receive a bullet
-    /// </summary>
-    /// <param name="quantity">Damage quantity</param>
-    public void DamageEnemy(int quantity)
+            /// <summary>
+            /// Handle when the enemy receive a bullet
+            /// </summary>
+            /// <param name="quantity">Damage quantity</param>
+            public void DamageEnemy(int quantity)
     {
         //currentLife -= quantity;
         //if (currentLife <= 0)
         //    Destroy(gameObject);
+    }
+
+
+    IEnumerator Wander()
+    {
+        wanderTime = wanderTimeCounter;
+        currentPoint = destinationPoint;
+        Vector3 wanderMove = new Vector3(Random.Range(wanderPoints[currentPoint].bounds.min.x, wanderPoints[currentPoint].bounds.max.x), Random.Range(wanderPoints[currentPoint].bounds.min.y, wanderPoints[currentPoint].bounds.max.y), Random.Range(wanderPoints[currentPoint].bounds.min.z, wanderPoints[currentPoint].bounds.max.z));
+        agent.SetDestination(wanderMove);
+        yield return null;
     }
 }
