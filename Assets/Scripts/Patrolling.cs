@@ -49,7 +49,10 @@ public class NewBehaviourScript : MonoBehaviour
 
         //Choose next destination point when the agents get close to the current one
         if (!isChasing && !agent.pathPending && agent.remainingDistance < 3f)
-            GotoNextPatrolPoint();
+        {
+            //GotoNextPatrolPoint();
+
+        }
     }
 
     /// <summary>
@@ -71,9 +74,9 @@ public class NewBehaviourScript : MonoBehaviour
         agent.stoppingDistance = 0f;
 
         //set the agent to the currently destination Point
-        
-            agent.SetDestination(patrolPoints[destinationPoint].position);
-            agent.isStopped = true;
+        agent.SetDestination(patrolPoints[destinationPoint].position);
+        agent.isStopped = false;
+
 
 
 
@@ -88,47 +91,34 @@ public class NewBehaviourScript : MonoBehaviour
     {
         NavMeshHit hit;
         //if no obstacles between enemy and player
-        if (!agent.Raycast(playerTransform.position, out hit))
-        {
-            //Go towards Player only if is at 10m or lower
-            if (hit.distance <= 10f)
-            {
-                isChasing = true; //Chase Player
-                agent.SetDestination(patrolPoints[destinationPoint + 1].position);
-                agent.stoppingDistance = 3f;
-                transform.LookAt(playerTransform.transform);
+        //if (!agent.Raycast(playerTransform.position, out hit))
+        //{
+        //    //Go towards Player only if is at 10m or lower
+        //    if (hit.distance <= 10f)
+        //    {
+        //        isChasing = true; //Chase Player
+        //        agent.SetDestination(patrolPoints[destinationPoint + 1].position);
+        //        agent.stoppingDistance = 3f;
+        //        transform.LookAt(patrolPoints[destinationPoint +1].transform);
 
 
-                //Stop Enemy at 5m 
-                if (hit.distance < 5f)
-                {
-                    agent.isStopped = true;
-                }
-                else
-                {
-                    agent.isStopped = false;
-                }
-
-                //shoot Player if distance between them is lower than 7m
-                if (hit.distance <= 7f)
-                {
-                    //if (weaponController.CanShoot())
-                    //    weaponController.Shoot();
-                }
-            }
-            //If the player more than 10f distance
-            else
-            {
-                agent.isStopped = false;
-                isChasing = false;
-            }
-        }
-        //Player Not in the Ray Cast 
-        else
-        {
-            agent.isStopped = false;
-            isChasing = false;
-        }
+               
+              
+                
+        //    }
+        //    //If the player more than 10f distance
+        //    else
+        //    {
+        //        agent.isStopped = false;
+        //        isChasing = false;
+        //    }
+        //}
+        ////Player Not in the Ray Cast 
+        //else
+        //{
+        //    agent.isStopped = false;
+        //    isChasing = false;
+        //}
 
     }
 
