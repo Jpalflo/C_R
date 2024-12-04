@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Props
   - Building
+  - Enemy
   layers:
   - Default
   - TransparentFX

@@ -46,12 +46,16 @@ public class PlayerMovement : MonoBehaviour
     //private float currentStamina;
     private bool isMoving;
 
+    [SerializeField] private GameObject colliderAttack;
 
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
+        colliderAttack = transform.GetChild(0).gameObject;
+
         characterController = GetComponent<CharacterController>();
         cameraTransform = Camera.main.transform;
 
@@ -122,18 +126,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    
-
-    /// <summary>
-    /// shoot method
-    /// </summary>
-    /// <param name="context"></param>
-    public void Shoot(InputAction.CallbackContext context)
-    {
-       
-    }
-
-
     /// <summary>
     /// move jump player
     /// </summary>
@@ -201,5 +193,21 @@ public class PlayerMovement : MonoBehaviour
         //}
     }
 
+    /// <summary>
+    /// attack method
+    /// </summary>
+    /// <param name="context"></param>
+    public void AttackEnemy(InputAction.CallbackContext context)
+    {
 
+        if (context.performed)
+        {
+            colliderAttack.SetActive(true);
+        }
+        else
+        {
+            colliderAttack.SetActive(false);
+
+        }
+    }
 }
