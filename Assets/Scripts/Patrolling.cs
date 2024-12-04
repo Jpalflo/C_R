@@ -78,7 +78,7 @@ public class NewBehaviourScript : MonoBehaviour
 
             if (wanderTime <= 0) /// ponerlo con un timer
             {
-                StartCoroutine(Wander());
+                Wander();
             }
         }
 
@@ -93,15 +93,6 @@ public class NewBehaviourScript : MonoBehaviour
         //set the agent to the currently destination Point
         agent.isStopped = false;
         agent.SetDestination(patrolPoints[destinationPoint].position);
-
-
-
-        //currentPoint = destinationPoint;
-        //Vector3 wanderMove = new Vector3(Random.Range(wanderPoints[currentPoint].bounds.min.x , wanderPoints[currentPoint].bounds.max.x), Random.Range(wanderPoints[currentPoint].bounds.min.y, wanderPoints[currentPoint].bounds.max.y), Random.Range(wanderPoints[currentPoint].bounds.min.z, wanderPoints[currentPoint].bounds.max.z));
-        //agent.SetDestination(wanderMove);
-        //Debug.Log(wanderMove);
-        //agent.isStopped = false;
-
     }
 
     /// <summary>
@@ -160,24 +151,25 @@ public class NewBehaviourScript : MonoBehaviour
 
     }
 
-            /// <summary>
-            /// Handle when the enemy receive a bullet
-            /// </summary>
-            /// <param name="quantity">Damage quantity</param>
-            public void DamageEnemy(int quantity)
+    /// <summary>
+    /// Handle when the enemy receive a bullet
+    /// </summary>
+    /// <param name="quantity">Damage quantity</param>
+    public void DamageEnemy(int quantity)
     {
         //currentLife -= quantity;
         //if (currentLife <= 0)
         //    Destroy(gameObject);
     }
 
-
-    IEnumerator Wander()
+    /// <summary>
+    /// void to wander randomly inside a box bounds
+    /// </summary>
+    private void Wander()
     {
         wanderTime = wanderTimeCounter;
         currentPoint = destinationPoint;
         Vector3 wanderMove = new Vector3(Random.Range(wanderPoints[currentPoint].bounds.min.x, wanderPoints[currentPoint].bounds.max.x), Random.Range(wanderPoints[currentPoint].bounds.min.y, wanderPoints[currentPoint].bounds.max.y), Random.Range(wanderPoints[currentPoint].bounds.min.z, wanderPoints[currentPoint].bounds.max.z));
         agent.SetDestination(wanderMove);
-        yield return null;
     }
 }
