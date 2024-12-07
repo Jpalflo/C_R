@@ -156,8 +156,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -149.9, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -190, y: -9.62}
+  m_SizeDelta: {x: 232.821, y: 69.24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2431712
 MonoBehaviour:
@@ -181,15 +181,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 00000
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4de7ea075b4dcda4989b25c2d5f7e79b, type: 2}
+  m_sharedMaterial: {fileID: -8343068842392791370, guid: 4de7ea075b4dcda4989b25c2d5f7e79b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278255388
+  m_fontColor: {r: 0.10980393, g: 1, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -436,8 +436,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 149, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 172.083, y: -11.169}
+  m_SizeDelta: {x: 246.165, y: 72.338}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &287277713
 MonoBehaviour:
@@ -461,15 +461,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: '00 : 00'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4de7ea075b4dcda4989b25c2d5f7e79b, type: 2}
+  m_sharedMaterial: {fileID: -8343068842392791370, guid: 4de7ea075b4dcda4989b25c2d5f7e79b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278255389
+  m_fontColor: {r: 0.11532295, g: 1, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1135,6 +1135,7 @@ GameObject:
   - component: {fileID: 589089062}
   - component: {fileID: 589089061}
   - component: {fileID: 589089063}
+  - component: {fileID: 589089064}
   m_Layer: 5
   m_Name: Coins
   m_TagString: Untagged
@@ -1159,8 +1160,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 15.0163, y: -12}
-  m_SizeDelta: {x: 223.549, y: 100}
+  m_AnchoredPosition: {x: 48.9843, y: 3.1949}
+  m_SizeDelta: {x: 371.2358, y: 166.0646}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &589089061
 MonoBehaviour:
@@ -1212,11 +1213,33 @@ Animation:
   m_Animation: {fileID: 7400000, guid: d715e87a06ee4144b82cd85079aa9caf, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: 3199117d2a1fa22439936fe7be3f5515, type: 2}
+  - {fileID: 0}
   - {fileID: 7400000, guid: d715e87a06ee4144b82cd85079aa9caf, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!95 &589089064
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 589089059}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: adc944dca77a8a34db44a82dc3ac32b3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &646722091
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1626,8 +1649,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 12, y: -12}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: -36.6374, y: 5.8109}
+  m_SizeDelta: {x: 311.4671, y: 177.4386}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1415430406
 MonoBehaviour:
@@ -1649,7 +1672,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: a0c1a349a7cfa2c48aa348fddcc0bdff, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1677,7 +1700,7 @@ Animator:
   m_GameObject: {fileID: 1415430404}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d68eb087f4e451c4198185e54c3211b4, type: 2}
+  m_Controller: {fileID: 9100000, guid: 3d0ac13250d2ec142bb8a982097a4571, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
