@@ -16,25 +16,21 @@ public class Attack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
     
     public void MakeDamage()
     {
 
         _enemy.health -= damage;
-        if (_enemy.health <= 0)
-        {
-            SpawnObject();
+       
+        _enemy.animatorEnemy.SetTrigger("TakeDamage");
 
-            Destroy(_enemy.gameObject);
-        }
 
     }
     private void SpawnObject()
     {
 
-        Instantiate(_enemy.dinero, _enemy.transform.position + new Vector3(0, 4, 0), Quaternion.identity); 
+        Instantiate(_enemy.dinero, _enemy.Spawn.transform.position + new Vector3 (0, 1,0), Quaternion.identity); 
         
     }
 
@@ -43,11 +39,10 @@ public class Attack : MonoBehaviour
 
         if (other.CompareTag("Enemy"))
         {
-
             _enemy = other.GetComponent<Enemy>();
             _enemy.animatorEnemy = other.GetComponent<Animator>();
-            _enemy.animatorEnemy.SetTrigger("TakeDamage");
             MakeDamage();
+
         }
     }
 }

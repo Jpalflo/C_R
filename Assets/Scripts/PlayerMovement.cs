@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Animator animator;
     public int puntos;
-
+    public bool activarMov;
     public void Awake()
     {
     }
@@ -68,15 +68,19 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
 
         Cursor.lockState = CursorLockMode.Locked;
-        this.enabled = false;
+        //this.enabled = false;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        MovePlayer();
-        LookAround();
+        if (activarMov == true)
+        {
+            MovePlayer();
+            LookAround();
+        }
+
 
 
 
@@ -199,6 +203,7 @@ public class PlayerMovement : MonoBehaviour
         if (context.performed)
         {
             colliderAttack.SetActive(true);
+            animator.SetTrigger("Attack");
         }
         else
         {
@@ -211,7 +216,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.CompareTag("Item"))
         {
-            Destroy(other.gameObject);
+            Destroy(other.transform.parent.gameObject);
             puntos += 250;
         }
     }

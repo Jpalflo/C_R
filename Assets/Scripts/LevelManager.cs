@@ -19,6 +19,7 @@ public class LevelManager : MonoBehaviour
     public float InternalLevelTime { get => internalLevelTime; set { if (value > 0) { internalLevelTime = value; } } } //Public setter and getter
 
     public PlayerMovement _playerMovement;
+    public Enemy _enemy;
 
     [SerializeField] private List<GameObject> enemiesList = new List<GameObject>();
 
@@ -52,7 +53,11 @@ public class LevelManager : MonoBehaviour
 
     private void Update()
     {
-        cuentaAtras -= Time.deltaTime;
+        if (cuentaAtras > 0)
+        {
+            cuentaAtras -= Time.deltaTime;
+
+        }
         if (internalLevelTime <= 0f)
         {
             GameOver();
@@ -61,6 +66,8 @@ public class LevelManager : MonoBehaviour
         {
             GameWin();
         }
+
+        Debug.Log(_enemy.Spawn.transform.position);
 
        
     }
@@ -145,6 +152,6 @@ public class LevelManager : MonoBehaviour
     IEnumerator ActivarPlayer()
     {
         yield return new WaitForSeconds(cuentaAtras);
-        _playerMovement.enabled = true;
+        _playerMovement.activarMov = true;
     }
 }
