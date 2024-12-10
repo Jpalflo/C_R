@@ -48,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private GameObject colliderAttack;
 
+    private Animator animator;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -61,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
 
         //inicializar barr to max
         //currentStamina = maxStamina;
+        animator = GetComponent<Animator>();
 
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -148,6 +150,15 @@ public class PlayerMovement : MonoBehaviour
 
         //movement
         Vector3 moveDirection = new Vector3(moveInput.x, 0, moveInput.y);
+        if (moveInput.x > 0 || moveInput.y > 0) 
+        {
+            Debug.Log("zdfmjdfs");
+            animator.SetBool("Run", true);
+        } 
+        else
+        {
+            animator.SetBool("Run", false);
+        }
         moveDirection = transform.TransformDirection(moveDirection);
         float targetSpeed = isSprinting ? speed * speedMultiplier : speed;
         characterController.Move(moveDirection * targetSpeed * Time.deltaTime);

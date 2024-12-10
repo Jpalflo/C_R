@@ -63,7 +63,6 @@ public class Patrolling : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(isChased);
 
         if (!agent.hasPath)
         {
@@ -103,7 +102,6 @@ public class Patrolling : MonoBehaviour
         if (!isChased) ///esto
         {    isChased = true;/// y esto para que la condicion se cumpla una vez
         
-            Debug.Log("visto");
 
             destinationPoint = Random.Range(0, patrolPoints.Count);
             if (destinationPoint == currentPoint)//se iguala por si sale el mismo numero y cambiarlo
