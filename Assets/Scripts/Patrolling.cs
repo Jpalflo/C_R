@@ -102,7 +102,8 @@ public class Patrolling : MonoBehaviour
     {
         //set the agent to the currently destination Point
         agent.isStopped = false;
-        agent.SetDestination(patrolPoints[destinationPoint].position);
+        Vector3 firstWanderMove = new  Vector3 (Random.Range(wanderPoints[currentPoint].bounds.min.x, wanderPoints[currentPoint].bounds.max.x), Random.Range(wanderPoints[currentPoint].bounds.min.y, wanderPoints[currentPoint].bounds.max.y), Random.Range(wanderPoints[currentPoint].bounds.min.z, wanderPoints[currentPoint].bounds.max.z));
+        agent.SetDestination(firstWanderMove);
     }
 
     /// <summary>
