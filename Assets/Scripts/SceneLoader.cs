@@ -15,7 +15,7 @@ public class SceneLoader : MonoBehaviour
             coroutine = StartCoroutine(LoadSceneWithTime(sceneIndex));
         }
         //AudioManager.Instance?.PlayButtonSound();
-        SceneManager.LoadScene("OutdoorsScene");
+        SceneManager.LoadScene(sceneIndex);
 
     }
 

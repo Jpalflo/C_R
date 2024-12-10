@@ -18,17 +18,11 @@ public class LevelManager : MonoBehaviour
     private float internalLevelTime;
     public float InternalLevelTime { get => internalLevelTime; set { if (value > 0) { internalLevelTime = value; } } } //Public setter and getter
 
-    ////PowerUps in the level
-    //private int totalLevelPowerUps = 0;
+    public PlayerMovement _playerMovement;
 
-    ////PowerUps a player has at some point
-    //private int currentPlayerPowerUps = 0;
-    //public int CurrentPlayerPowerUps { get => currentPlayerPowerUps; set => currentPlayerPowerUps = value; }
+    [SerializeField] private List<GameObject> enemiesList = new List<GameObject>();
 
-    ////Remaining PowerUps in the level
-    //private int remainingPowerUps = 0;
-    //public int RemainingPlayerPowerUps { get => remainingPowerUps; set => remainingPowerUps = value; }
-
+    public float cuentaAtras;
 
     private void Awake()
     {
@@ -41,6 +35,10 @@ public class LevelManager : MonoBehaviour
 
         //restart timeScale
         Time.timeScale = 1;
+        foreach (GameObject item in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            enemiesList.Add(item);
+        }
     }
 
     private void Start()
@@ -49,21 +47,22 @@ public class LevelManager : MonoBehaviour
         //Debug.Log(totalLevelPowerUps);
 
         //RemainingPlayerPowerUps = totalLevelPowerUps;
+        StartCoroutine(ActivarPlayer());
     }
 
     private void Update()
     {
-        if (internalLevelTime <= 0.2f)
+        cuentaAtras -= Time.deltaTime;
+        if (internalLevelTime <= 0f)
         {
             GameOver();
         }
+        if (_playerMovement.puntos >1200)
+        {
+            GameWin();
+        }
 
-        //if (currentPlayerPowerUps >= totalLevelPowerUps)
-        //{
-        //    GameWin();
-        //}
-
-        //remainingPowerUps = totalLevelPowerUps - currentPlayerPowerUps;
+       
     }
 
     /// <summary>
@@ -86,6 +85,8 @@ public class LevelManager : MonoBehaviour
         winPanel.SetActive(true);
 
         Time.timeScale = 0;
+        Cursor.lockState = CursorLockMode.None;
+
     }
 
     /// <summary>
@@ -141,4 +142,9 @@ public class LevelManager : MonoBehaviour
         //SceneManager.LoadScene(GameConstants.MAINMENU_LEVEL);
     }
 
+    IEnumerator ActivarPlayer()
+    {
+        yield return new WaitForSeconds(cuentaAtras);
+        _playerMovement.enabled = true;
+    }
 }
