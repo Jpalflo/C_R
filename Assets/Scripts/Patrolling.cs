@@ -28,6 +28,7 @@ public class Patrolling : MonoBehaviour
     [SerializeField]private float wanderTime;
     [SerializeField] private float wanderTimeCounter = 4f;
 
+    private Animator animator;
 
     private void Start()
     {
@@ -38,7 +39,7 @@ public class Patrolling : MonoBehaviour
         //weaponController = GetComponent<WeaponController>();
         enemyRenderer = GetComponentInChildren<Renderer>();
 
-        
+        animator = GetComponent<Animator>();
 
 
         //Take all the children of patrolPointContainer and add them in the patrolPoints array
@@ -63,6 +64,11 @@ public class Patrolling : MonoBehaviour
 
     private void Update()
     {
+        if (agent.isStopped == false)
+        {
+            animator.SetBool("Run", true);
+
+        }
 
         if (!agent.hasPath)
         {
@@ -143,7 +149,7 @@ public class Patrolling : MonoBehaviour
         //Player Not in the Ray Cast
         else
         {
-            agent.isStopped = false;
+            agent.isStopped = true;
             isChased = false;
         }
 
