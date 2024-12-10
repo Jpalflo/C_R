@@ -34,7 +34,6 @@ public class Attack : MonoBehaviour
     private void SpawnObject()
     {
         
-            //Instantiate(obj, this.transform.position, Quaternion.identity);
             Instantiate(obj, _enemy.transform.position, Quaternion.identity);
         
     }
