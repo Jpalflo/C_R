@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isSprinting;
 
     //camera look sense and max angle to limit v rotation
-    [SerializeField] private float lookSensitivity = 0.5f;
+    [SerializeField] private float lookSensitivity = 5f;
     private float maxLookAngle = 80f;
 
     //[SerializeField] private float stamina; //mio
@@ -49,8 +49,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject colliderAttack;
 
     private Animator animator;
-
-
+    public int puntos;
+    public bool activarMov;
+    public void Awake()
+    {
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -65,16 +68,23 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
 
         Cursor.lockState = CursorLockMode.Locked;
+        //this.enabled = false;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        MovePlayer();
-        LookAround();
+        if (activarMov == true)
+        {
+            MovePlayer();
+            LookAround();
+        }
 
 
-        HandleStamina();
+
+
+        Debug.Log(puntos);
     }
 
     /// <summary>
@@ -152,7 +162,6 @@ public class PlayerMovement : MonoBehaviour
         Vector3 moveDirection = new Vector3(moveInput.x, 0, moveInput.y);
         if (moveInput.x > 0 || moveInput.y > 0) 
         {
-            Debug.Log("zdfmjdfs");
             animator.SetBool("Run", true);
         } 
         else
@@ -182,27 +191,7 @@ public class PlayerMovement : MonoBehaviour
         verticalRotation = Mathf.Clamp(verticalRotation, -maxLookAngle, maxLookAngle);
         cameraTransform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
     }
-    /// <summary>
-    /// handle stamina bar
-    /// </summary>
-    private void HandleStamina()
-    {
-        //if (isSprinting && isMoving && currentStamina > 0)
-        //{
-        //    currentStamina -= staminaDrainRate * Time.deltaTime;
-        //    if (currentStamina <= 0)
-        //    {
-        //        currentStamina = 0;
-        //        isSprinting = false;
-        //    }
-        //    else if (!isSprinting && currentStamina < maxStamina)
-        //    {
-        //        currentStamina += staminaRegenRate * Time.deltaTime;
-        //        currentStamina = Mathf.Min(currentStamina, maxStamina); //para que no supere el numero max
-        //    }
-        //    staminaBar.value = currentStamina;
-        //}
-    }
+    
 
     /// <summary>
     /// attack method
@@ -214,11 +203,21 @@ public class PlayerMovement : MonoBehaviour
         if (context.performed)
         {
             colliderAttack.SetActive(true);
+            animator.SetTrigger("Attack");
         }
         else
         {
             colliderAttack.SetActive(false);
 
+        }
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Item"))
+        {
+            Destroy(other.transform.parent.gameObject);
+            puntos += 250;
         }
     }
 }

@@ -15,7 +15,7 @@ public class SceneLoader : MonoBehaviour
             coroutine = StartCoroutine(LoadSceneWithTime(sceneIndex));
         }
         //AudioManager.Instance?.PlayButtonSound();
-        SceneManager.LoadScene("OutdoorsScene");
+        SceneManager.LoadScene(sceneIndex);
 
     }
 
@@ -31,13 +31,13 @@ public class SceneLoader : MonoBehaviour
     {
         //AudioManager.Instance?.PlayButtonSound();
 
-        #if UNITY_EDITOR
+        
             // Si estamos en el editor, detén el juego
             UnityEditor.EditorApplication.isPlaying = false;
-        #else
+        
         // If is a compilation, close the app
         Application.Quit();
-        #endif
+        
     }
 
     public void Restart() //Restart the scene

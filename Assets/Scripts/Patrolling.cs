@@ -64,9 +64,14 @@ public class Patrolling : MonoBehaviour
 
     private void Update()
     {
-        if (agent.isStopped == false)
+        Debug.Log(agent.hasPath);
+        if (agent.hasPath == true)
         {
             animator.SetBool("Run", true);
+        }
+        else
+        {
+            animator.SetBool("Run", false);
 
         }
 
@@ -97,7 +102,8 @@ public class Patrolling : MonoBehaviour
     {
         //set the agent to the currently destination Point
         agent.isStopped = false;
-        agent.SetDestination(patrolPoints[destinationPoint].position);
+        Vector3 firstWanderMove = new  Vector3 (Random.Range(wanderPoints[currentPoint].bounds.min.x, wanderPoints[currentPoint].bounds.max.x), Random.Range(wanderPoints[currentPoint].bounds.min.y, wanderPoints[currentPoint].bounds.max.y), Random.Range(wanderPoints[currentPoint].bounds.min.z, wanderPoints[currentPoint].bounds.max.z));
+        agent.SetDestination(firstWanderMove);
     }
 
     /// <summary>
@@ -149,7 +155,7 @@ public class Patrolling : MonoBehaviour
         //Player Not in the Ray Cast
         else
         {
-            agent.isStopped = true;
+            agent.isStopped = false;
             isChased = false;
         }
 

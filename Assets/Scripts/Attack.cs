@@ -8,7 +8,6 @@ public class Attack : MonoBehaviour
 {
     [SerializeField] private Enemy _enemy;
     [SerializeField] private int damage = 10;
-    public GameObject obj;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,24 +16,21 @@ public class Attack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
     
     public void MakeDamage()
     {
-        _enemy.health -= damage;
-        if (_enemy.health <= 0)
-        {
-            SpawnObject();
 
-            Destroy(_enemy.gameObject);
-        }
+        _enemy.health -= damage;
+       
+        _enemy.animatorEnemy.SetTrigger("TakeDamage");
+
 
     }
     private void SpawnObject()
     {
-        
-            Instantiate(obj, _enemy.transform.position, Quaternion.identity);
+
+        Instantiate(_enemy.dinero, _enemy.Spawn.transform.position + new Vector3 (0, 1,0), Quaternion.identity); 
         
     }
 
@@ -43,10 +39,10 @@ public class Attack : MonoBehaviour
 
         if (other.CompareTag("Enemy"))
         {
-            Debug.Log("entraaqui");
             _enemy = other.GetComponent<Enemy>();
-
+            _enemy.animatorEnemy = other.GetComponent<Animator>();
             MakeDamage();
+
         }
     }
 }
