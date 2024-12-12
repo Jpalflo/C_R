@@ -33,7 +33,7 @@ public class SceneLoader : MonoBehaviour
 
         
             // Si estamos en el editor, detén el juego
-            UnityEditor.EditorApplication.isPlaying = false;
+           ///UnityEditor.EditorApplication.isPlaying = false;
         
         // If is a compilation, close the app
         Application.Quit();

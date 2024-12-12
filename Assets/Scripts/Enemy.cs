@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(spawn.transform.position);
+        //Debug.Log(spawn.transform.position);
         if (health < 0)
         {
             Instantiate(dinero, spawn.transform.position, Quaternion.identity);

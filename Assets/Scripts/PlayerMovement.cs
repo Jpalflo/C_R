@@ -84,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-        Debug.Log(puntos);
+        //Debug.Log(puntos);
     }
 
     /// <summary>

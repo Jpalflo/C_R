@@ -53,12 +53,14 @@ public class LevelManager : MonoBehaviour
 
     private void Update()
     {
+        internalLevelTime -= Time.deltaTime;
+        Debug.Log(internalLevelTime);
         if (cuentaAtras > 0)
         {
             cuentaAtras -= Time.deltaTime;
 
         }
-        if (internalLevelTime <= 0f)
+        if (internalLevelTime <= 0.1f)
         {
             GameOver();
         }
@@ -67,7 +69,7 @@ public class LevelManager : MonoBehaviour
             GameWin();
         }
 
-        Debug.Log(_enemy.Spawn.transform.position);
+        //Debug.Log(_enemy.Spawn.transform.position);
 
        
     }

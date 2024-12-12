@@ -26,7 +26,6 @@ public class HUDController : MonoBehaviour
     }
     private void Update()
     {
-        LevelManager.Instance.InternalLevelTime -= Time.deltaTime;
         seconds = (int)LevelManager.Instance.InternalLevelTime % 60;
         minutes = (int)LevelManager.Instance.InternalLevelTime / 60;
 

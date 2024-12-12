@@ -64,7 +64,7 @@ public class Patrolling : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(agent.hasPath);
+        //Debug.Log(agent.hasPath);
         if (agent.hasPath == true)
         {
             animator.SetBool("Run", true);
